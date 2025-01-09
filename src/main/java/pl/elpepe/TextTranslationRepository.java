@@ -10,9 +10,7 @@ public class TextTranslationRepository {
 
     private List<TextTranslation> textTranslations;
 
-
-    public TextTranslationRepository() {
-        FileService fileService = new FileService();
+    public TextTranslationRepository(FileService fileService) {
         try {
             this.textTranslations = fileService.readAllFile();
         } catch (IOException e) {

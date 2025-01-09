@@ -1,5 +1,6 @@
 package pl.elpepe;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
@@ -15,16 +16,18 @@ import java.util.stream.Collectors;
 public class FileService {
 
 
-    public FileService() {
+    private final String fileName;
+
+    public FileService(@Value("${dictionary.file}") String fileName) {
+        this.fileName = fileName;
     }
 
-    private final String FILE_NAME = "data.csv";
 
     List<TextTranslation> readAllFile() throws IOException {
-        if (!Files.exists(Paths.get(FILE_NAME))) {
-            throw new IOException("file now found " + FILE_NAME);
+        if (!Files.exists(Paths.get(fileName))) {
+            throw new IOException("file now found " + fileName);
         }
-        try (var lines = Files.lines(Paths.get(FILE_NAME))) {
+        try (var lines = Files.lines(Paths.get(fileName))) {
             return lines
                     .map(CsvConverter::parse)
                     .collect(Collectors.toList());
@@ -32,7 +35,7 @@ public class FileService {
     }
 
     void saveTextTranslation(List<TextTranslation> textTranslations) throws IOException {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_NAME))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))) {
             for (TextTranslation textTranslation : textTranslations) {
                 bufferedWriter.write(textTranslation.toString());
                 bufferedWriter.newLine();
