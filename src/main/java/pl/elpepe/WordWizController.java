@@ -18,17 +18,19 @@ public class WordWizController {
     private final TextTranslationRepository repository;
     private final FileService fileService;
     private final Scanner scanner;
+    private final ConsoleTextWriter consoleTextWriter;
 
     @Autowired
-    public WordWizController(TextTranslationRepository repository, FileService fileService, Scanner scanner) {
+    public WordWizController(TextTranslationRepository repository, FileService fileService, Scanner scanner, ConsoleTextWriter consoleTextWriter) {
         this.repository = repository;
         this.fileService = fileService;
         this.scanner = scanner;
+        this.consoleTextWriter = consoleTextWriter;
     }
 
 
     public void startMainLoop() {
-        System.out.print("Welcome User");
+        consoleTextWriter.print("Welcome User");
         int option = UNDEFINED;
         while (option != CLOSE_APP) {
             printMenu();
@@ -43,13 +45,13 @@ public class WordWizController {
             case ADD_WORD -> addWord();
             case LEARN -> learn();
             case CLOSE_APP -> closeApp();
-            default -> System.out.println("Invalid option");
+            default -> consoleTextWriter.print("Invalid option");
         }
     }
 
     private void learn() {
         if (repository.isEmpty()) {
-            System.out.println("base is empty, add at least one word");
+            consoleTextWriter.print("base is empty, add at least one word");
             return;
         }
 
@@ -57,15 +59,15 @@ public class WordWizController {
         Set<TextTranslation> textTranslations = repository.getRandomTextTranslations(testSize);
         int score = 0;
         for (TextTranslation textTranslation : textTranslations) {
-            System.out.printf("enter translation for :\"%s\"\n", textTranslation.getOriginal());
+            consoleTextWriter.print("enter translation for : " + textTranslation.getOriginal());
             String translation = scanner.nextLine();
             if (textTranslation.getTranslation().equalsIgnoreCase(translation)) {
-                System.out.println("correct answer");
+                consoleTextWriter.print("correct answer");
                 score++;
             } else {
-                System.out.println("wrong answer - " + textTranslation.getTranslation());
+                consoleTextWriter.print("wrong answer - " + textTranslation.getTranslation());
             }
-            System.out.printf("your score: %d/%d\n", score, testSize);
+            consoleTextWriter.print("your score: " + score + "/" + testSize);
         }
 
 
@@ -74,16 +76,16 @@ public class WordWizController {
     private void closeApp() {
         try {
             fileService.saveTextTranslation(repository.getAllTextTranslations());
-            System.out.println("changes saved");
+            consoleTextWriter.print("changes saved");
         } catch (IOException e) {
-            System.out.print("failed to save");
+            consoleTextWriter.print("failed to save");
         }
     }
 
     private void addWord() {
-        System.out.println("Enter original word");
+        consoleTextWriter.print("Enter original word");
         String originalWord = scanner.nextLine();
-        System.out.println("enter translation");
+        consoleTextWriter.print("enter translation");
         String translation = scanner.nextLine();
         TextTranslation textTranslation = new TextTranslation(originalWord, translation);
         repository.add(textTranslation);
@@ -106,9 +108,9 @@ public class WordWizController {
 
 
     private void printMenu() {
-        System.out.println("please choose an option");
-        System.out.println("0 - Add word");
-        System.out.println("1 - Learn");
-        System.out.println("2 - Close app");
+        consoleTextWriter.print("please choose an option");
+        consoleTextWriter.print("0 - Add word");
+        consoleTextWriter.print("1 - Learn");
+        consoleTextWriter.print("2 - Close app");
     }
 }
