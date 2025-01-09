@@ -1,21 +1,33 @@
 package pl.elpepe;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
-public class WordWizManager {
+@Controller
+public class WordWizController {
     public static final int UNDEFINED = -1;
     public static final int ADD_WORD = 0;
     public static final int LEARN = 1;
     public static final int CLOSE_APP = 2;
 
-    private final TextTranslationRepository repository = new TextTranslationRepository();
-    private final FileService fileService = new FileService();
-    private final Scanner scanner = new Scanner(System.in);
+    private final TextTranslationRepository repository;
+    private final FileService fileService;
+    private final Scanner scanner;
 
-    public void mainMenuLoop() {
+    @Autowired
+    public WordWizController(TextTranslationRepository repository, FileService fileService, Scanner scanner) {
+        this.repository = repository;
+        this.fileService = fileService;
+        this.scanner = scanner;
+    }
+
+
+    public void startMainLoop() {
         System.out.print("Welcome User");
         int option = UNDEFINED;
         while (option != CLOSE_APP) {
@@ -23,9 +35,8 @@ public class WordWizManager {
             option = chooseOption();
             executeOption(option);
         }
-
-
     }
+
 
     private void executeOption(int option) {
         switch (option) {

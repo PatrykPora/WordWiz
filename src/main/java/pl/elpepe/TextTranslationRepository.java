@@ -1,11 +1,15 @@
 package pl.elpepe;
 
+import org.springframework.stereotype.Repository;
+
 import java.io.IOException;
 import java.util.*;
 
+@Repository
 public class TextTranslationRepository {
 
     private List<TextTranslation> textTranslations;
+
 
     public TextTranslationRepository() {
         FileService fileService = new FileService();
