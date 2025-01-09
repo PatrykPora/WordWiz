@@ -1,6 +1,7 @@
-package pl.elpepe;
+package pl.elpepe.repository;
 
 import org.springframework.stereotype.Repository;
+import pl.elpepe.service.FileService;
 
 import java.io.IOException;
 import java.util.*;
@@ -34,7 +35,7 @@ public class TextTranslationRepository {
         return textTranslations.isEmpty();
     }
 
-    Set<TextTranslation> getRandomTextTranslations(int number) {
+    public Set<TextTranslation> getRandomTextTranslations(int number) {
         Random random = new Random();
         Set<TextTranslation> randomTranslations = new HashSet<>();
         while (randomTranslations.size() < number && randomTranslations.size() < textTranslations.size()) {

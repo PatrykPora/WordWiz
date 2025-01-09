@@ -1,7 +1,11 @@
-package pl.elpepe;
+package pl.elpepe.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import pl.elpepe.repository.TextTranslation;
+import pl.elpepe.repository.TextTranslationRepository;
+import pl.elpepe.service.FileService;
+import pl.elpepe.tekstFormatter.ConsoleTextWriter;
 
 import java.io.IOException;
 import java.util.InputMismatchException;

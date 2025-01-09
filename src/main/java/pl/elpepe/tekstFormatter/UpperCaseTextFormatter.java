@@ -1,4 +1,4 @@
-package pl.elpepe;
+package pl.elpepe.tekstFormatter;
 
 import org.springframework.stereotype.Component;
 

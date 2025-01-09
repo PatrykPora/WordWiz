@@ -1,4 +1,4 @@
-package pl.elpepe;
+package pl.elpepe.repository;
 
 public class TextTranslation {
 

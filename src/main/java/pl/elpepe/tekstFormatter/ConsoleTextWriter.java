@@ -1,4 +1,4 @@
-package pl.elpepe;
+package pl.elpepe.tekstFormatter;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ public class ConsoleTextWriter {
         this.textFormatter = textFormatter;
     }
 
-    void print(String text) {
+    public void print(String text) {
         System.out.println(textFormatter.formatText(text));
     }
 }

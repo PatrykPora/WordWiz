@@ -1,6 +1,4 @@
-package pl.elpepe;
-
-import org.springframework.stereotype.Component;
+package pl.elpepe.tekstFormatter;
 
 public interface TextFormatter {
     String formatText(String text);
